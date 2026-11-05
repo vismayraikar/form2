@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Super Cars World</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: white;
+            color: black;
+            text-align: center;
+        }
+
+        .form-card {
+            width: 350px;
+            margin: 40px auto;
+            padding: 25px;
+            border: 1px solid gray;
+            border-radius: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #formMessage {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>SUPER CARS WORLD</h1>
+
+    <div class="form-card">
+
+        <h2>Join Super Cars World</h2>
+        <p>Enter your details to join our car community.</p>
+
+        <form id="carForm">
+
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="Enter phone number"
+                   pattern="[0-9]{10}" maxlength="10" required>
+
+            <button type="submit" id="submitButton">Submit</button>
+
+        </form>
+
+        <p id="formMessage"></p>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Super Cars World</p>
+    </footer>
+
+    <script>
+
+        const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_URL";
+
+        document.getElementById("carForm").addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+            let form = this;
+            let message = document.getElementById("formMessage");
+            let button = document.getElementById("submitButton");
+
+            button.disabled = true;
+            button.innerText = "Submitting...";
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body: new URLSearchParams(new FormData(form))
+            })
+            .then(function() {
+                message.innerText = "Form submitted successfully!";
+                message.style.color = "green";
+                form.reset();
+            })
+            .catch(function() {
+                message.innerText = "Something went wrong!";
+                message.style.color = "red";
+            })
+            .finally(function() {
+                button.disabled = false;
+                button.innerText = "Submit";
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
